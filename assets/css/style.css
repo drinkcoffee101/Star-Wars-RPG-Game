@@ -1,8 +1,23 @@
-
-body{
-    height: 600px;
+*{
+    font-family: 'Permanent Marker';
 }
 
+body{
+    background-image: url(https://wallpapertag.com/wallpaper/full/0/7/8/694080-poke-ball-wallpapers-2560x1600-1080p.jpg);
+    background-size: 40%;
+    font-family: 'Permanent Marker';
+}
+
+h1 {
+    font-size: 70px;
+    text-align: center;
+}
+
+h3 {
+    padding-top: 10px;
+    font-size: 20px;
+    text-align: center;
+}
 
 
 
@@ -11,7 +26,7 @@ body{
 =============================================*/
 .flex-container {
     display: flex;
-    height: 300px;
+    height: 400px;
     padding-top:100px;
     justify-content: center;
     align-items: center;
@@ -19,7 +34,7 @@ body{
 
 .character {
     width: 150px;
-    margin: 1px;
+    margin: 5px;
     margin-top: 20px;
     text-align: center;
     line-height: 30px;
@@ -57,5 +72,17 @@ body{
 #winloss{
     font-size: 20px;
     font-weight: bold;
+}
+
+img {
+    width:100px;
+    height: 100px;
+}
+
+.border {
+    border: 5px;
+    border-color: black;
+    border-style: solid;
+
 }
 

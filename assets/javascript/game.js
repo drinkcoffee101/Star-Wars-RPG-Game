@@ -35,31 +35,41 @@
 
 
 $(document).ready(function(){
-    //hide try again buttong
+    //hide the 'try again' button
     $('#tryagain').css("visibility", "hidden");
 
-    //start with no attacker
+    //used to keep track of the exsistance of an attacker/defender selecting characters so you don't choose more than one of each 
     let isAttacker = false;
     let isDefender = false;
 
-    //character objects
+
+
+/*=============================================
+=            Character Objects                =
+=============================================*/
+
+    //character objects holding name, hp, attack, defense (found out I  don't need to put the keys in quotations)
     let redCharacter = {
+      "Name": "Charizard",
       "HP": 100,
       "Attack": 5,
       "Defense": 30
     };
     let yellowCharacter = {
+        "Name": "Raichu",
         "HP": 100,
         "Attack": 20,
         "Defense": 25
     }
     let blueCharacter = {
+        "Name": "Wartortle",
         "HP": 120,
         "Attack": 8,
         "Defense": 20
     }
     let greenCharacter = {
-        "HP": 150,
+        "Name": "Bulbasaur",
+        "HP": 151,
         "Attack": 60,
         "Defense": 15
     }
@@ -69,11 +79,13 @@ $(document).ready(function(){
 =            Character Selection            =
 =============================================*/
 
+//when the image of the charcater is clicked 
 $(".character").click(function(){
 
     //1st pass -- no attacker so set attacker to true and give what was clicked the attacker class 
     //2nd pass -- attacker is true so see if there is a defender
     //should prevent the player from clicking the remaining characters
+    //attacker class is used to mark the active attacker 
     if(isAttacker === false){
         $(this).addClass('attacker');
         isAttacker = true;
@@ -82,33 +94,66 @@ $(".character").click(function(){
         $(this).addClass('defender');
         isDefender = true;
     }
-    // console.log(isDefender);
-    // console.log()
-    // console.log($(this).attr('id'));
 });
 
 
 // /*=============================================
-// =            Attacking/Defending            =
+// =            Variables/Functions               =
 // =============================================*/
 
-//when attack is hit, take what has the class attack and call on its objects attribute attack value 
+//when attack is hit, take what has the class 'attacker' and call on its objects attribute attack value 
 //store the attack vaue to subtract from defender HP
 let attackAmount = 0;
 let defendAmount = 0;
-let attackerHP = 0;
+//used as a check to define a win at 0 defenders remaining 
 let defendersRemaining = 3;
-let characterIDs = ["red", "yellow", "blue", "green"];
+
+//update page with how much damage was done by the attacker
+function  updateAttackInfo(){
+    if($(".attacker").attr('id') === "red"){
+        $("#attack-text").text(redCharacter.Name+ " attacked for " + attackAmount);
+    }
+    else if($(".attacker").attr('id') === "blue"){
+        $("#attack-text").text(blueCharacter.Name+ " attacked for " + attackAmount);
+    }
+    else if($(".attacker").attr('id') === "green"){
+        $("#attack-text").text(greenCharacter.Name+ " attacked for " + attackAmount);
+    }
+    else if($(".attacker").attr('id') === "yellow"){
+        $("#attack-text").text(yellowCharacter.Name+ " attacked for " + attackAmount);
+    }
+ }
+
+ //update page with how much damage is done by the defender 
+ function updateDefenseInfo() {
+    if($(".defender").attr('id') === "red"){
+        $("#defense-text").text(redCharacter.Name+ " defended for " + defendAmount);
+    }
+    else if($(".defender").attr('id') === "blue"){
+        $("#defense-text").text(blueCharacter.Name+ " defended for " + defendAmount);
+    }
+    else if($(".defender").attr('id') === "green"){
+        $("#defense-text").text(greenCharacter.Name+ " defended for " + defendAmount);
+    }
+    else if($(".defender").attr('id') === "yellow"){
+        $("#defense-text").text(yellowCharacter.Name+ " defended for " + defendAmount);
+    }
+ };
+
 
 //removes defeated character 
 //ticks remaining defenders
 //reset defenders so another can be chosen
+//remove defender class or else game will think there is more than one 
 function defeatCharacter() {
     isDefender = false;
     defendersRemaining--;
     $('.defender').hide();
+    $('.defender').removeClass("defender");
+    $("#defense-text").empty();
 };
 
+//used when attacker health reaches ~0
 function gameOver(){
     $('#winloss').text("You Lose. Game Over");
     $('#tryagain').css("visibility", "visible");
@@ -133,6 +178,8 @@ function resetGame(){
     yellowCharacter.HP = 100;
     $('#yellowHP').text("HP: " + yellowCharacter.HP);
 
+    $("#attack-text").empty();
+
     $('#winloss').text("");
 
     $('#tryagain').css("visibility", "hidden");
@@ -140,59 +187,72 @@ function resetGame(){
     $('.character').show();
 }
 
-// isDefender = false;
-// defendersRemaining--;
-// $("#red").remove();
+
+/*=============================================
+=            Attack Button                    =
+=============================================*/
 
 $("#attackbutton").click(function(){
 
-    // search attacker and set/increment attack value
+    // search for attacker and set/increment attack value 
     if($(".attacker").attr('id') === "red"){       
         if(attackAmount > 0){
-            attackAmount = attackAmount + 5;    
+            attackAmount = attackAmount + 5;   
+            updateAttackInfo(); 
         }
         else{
             attackAmount = redCharacter.Attack;
+            updateAttackInfo();
         }     
     }
     else if($(".attacker").attr('id') === "blue"){
         if(attackAmount > 0){
-            attackAmount = attackAmount + 8;    
+            attackAmount = attackAmount + 8;   
+            updateAttackInfo();
         }
         else{
             attackAmount = blueCharacter.Attack;
+            updateAttackInfo();
         }    
 
     }
     else if($(".attacker").attr('id') === "green"){
         if(attackAmount > 0){
-            attackAmount = attackAmount + 8;    
+            attackAmount = attackAmount + 8;   
+            updateAttackInfo(); 
         }
         else{
             attackAmount = greenCharacter.Attack;
+            updateAttackInfo();  
         }    
     }
     else if($(".attacker").attr('id') === "yellow"){
         if(attackAmount > 0){
             attackAmount = attackAmount + 10;    
+            updateAttackInfo();  
         }
         else{
             attackAmount = yellowCharacter.Attack;
+            updateAttackInfo(); 
         }    
     }
 
     //search for defender and set defense amount
     if($(".defender").attr('id') === 'red'){
         defendAmount = redCharacter.Defense;
+        updateDefenseInfo();
     }
     else if(($(".defender").attr('id') === 'blue')){
         defendAmount = blueCharacter.Defense;
+        updateDefenseInfo();
     }
     else if(($(".defender").attr('id') === 'green')){
         defendAmount = greenCharacter.Defense;
+        updateDefenseInfo();
     }
     else if(($(".defender").attr('id') === 'yellow')){
         defendAmount = yellowCharacter.Defense;
+        updateDefenseInfo();
     }
 
     //subtract HP from attacker 
@@ -200,16 +260,15 @@ $("#attackbutton").click(function(){
        redCharacter["HP"] = redCharacter.HP - defendAmount;
        $('#redHP').text("HP: " + redCharacter.HP);
         //display game over if health reaches 0
-       if(redCharacter.HP < 0){
-           gameOver();
-           
+       if(redCharacter.HP <= 0){
+           gameOver();   
        }
    }
    else if($(".attacker").attr('id') === 'blue'){
         blueCharacter["HP"] = blueCharacter.HP - defendAmount;
         $('#blueHP').text("HP: " + blueCharacter.HP);
 
-        if(blueCharacter.HP < 0){
+        if(blueCharacter.HP <= 0){
             gameOver();
         }
     }
@@ -217,7 +276,7 @@ $("#attackbutton").click(function(){
         greenCharacter["HP"] = greenCharacter.HP - defendAmount;
         $('#greenHP').text("HP: " + greenCharacter.HP);
 
-        if(greenCharacter.HP < 0){
+        if(greenCharacter.HP <= 0){
            gameOver();
         }
     }
@@ -225,7 +284,7 @@ $("#attackbutton").click(function(){
         yellowCharacter["HP"] = yellowCharacter.HP - defendAmount;
         $('#yellowHP').text("HP: " + yellowCharacter.HP);
 
-        if(yellowCharacter.HP < 0){
+        if(yellowCharacter.HP <= 0){
             gameOver();
         }
     }
@@ -265,8 +324,6 @@ $("#attackbutton").click(function(){
          }
      }
 
-
-
      //beat the game
      if (defendersRemaining === 0){
          $("#winloss").text("yay you won!");
@@ -276,13 +333,6 @@ $("#attackbutton").click(function(){
      //reset button
      $('#tryagain').click(function () { 
          resetGame();
-         
      });
-    
-   
-
-
-});
-
-
+    });
 });

@@ -6,22 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <title>Poke Battle</title>
 </head>
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="assets/javascript/game.js"></script>
     <!-- /*=====  Javascript  ======*/ -->
 
+    <h1>Poke-Dojo</h1>
+    <h3 class="instructions">CHoose your pokemon, then choose an opponent! Then hit the attack button.</h3>
     <div class="flex-container">
-        <div id="red" class="character">Character Red<br><span id="redHP">HP: 100</span></div>
-        <div id="blue" class="character">Character Blue<br><span id="blueHP">HP: 120</span></div>
-        <div id="green" class="character">Character Green<br><span id="greenHP">HP: 150</span></div>
-        <div id="yellow" class="character">Character Yellow<br><span id="yellowHP">HP: 100</span></div>
+        <div id="red" class="character border" ><img src="assets/images/charizard.jpg"><br><span id="redHP">HP: 100</span></div>
+        <div id="blue" class="character border"><img src="assets/images/wartortule.jpg"><br><span id="blueHP">HP: 120</span></div>
+        <div id="green" class="character border"><img src="assets/images/bulbasaur.jpg"><br><span id="greenHP">HP: 150</span></div>
+        <div id="yellow" class="character border"><img src="assets/images/raichu.jpg"><br><span id="yellowHP">HP: 100</span></div>
         <button id="attackbutton">Attack</button>
         <button id="tryagain">Try Again!</button>
     </div>
-    <span id="winloss"></span>
+    <h3 id="attack-text"></h3>
+    <h3 id="defense-text"></h3>
+    <h3 id="winloss"></h3>
     
     
     
