@@ -179,6 +179,7 @@ function resetGame(){
     $('#yellowHP').text("HP: " + yellowCharacter.HP);
 
     $("#attack-text").empty();
+    $("#defense-text").empty();
 
     $('#winloss').text("");
 
